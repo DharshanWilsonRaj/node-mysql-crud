@@ -11,14 +11,15 @@ router.get('/', (req, res) => {
     })
 });
 
-router.get('/:id', (req, res) => {
+router.get('/id/:id', (req, res) => {
     const id = req.params.id;
-    db.query('SELECT * FROM orders WHERE id = ?', [id], (err, result) => {
+
+    db.query('SELECT * FROM orders WHERE id = ?', id, (err, result) => {
         if (err) {
+            console.error(err);
             return res.status(500).json({ message: 'Internal server error' });
         }
 
-        // Check if any order was found
         if (result.length === 0) {
             return res.status(404).json({ message: 'Order not found' });
         }
@@ -69,6 +70,23 @@ router.post('/create/:movie_id', (req, res) => {
         });
     });
 });
+
+router.get('/users', (req, res) => {  // get all users and  their orders
+    const query = `
+    SELECT orders.id, movies.name AS movie_name, users.name AS user_name
+    FROM movies
+    JOIN orders ON movies.id = orders.movie_id
+    JOIN users ON orders.user_id = users.id;
+  `;
+    db.query(query, (err, result) => {
+        if (err) {
+            console.error("Database error:", err);
+            return res.status(500).json({ message: 'Internal server error' });
+        }
+        res.status(200).json(result)
+    })
+});
+
 
 
 

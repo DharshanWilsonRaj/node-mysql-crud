@@ -14,8 +14,8 @@ router.get('/', (req, res) => {
 
 // Create User
 router.post('/create', (req, res) => {
-    const { name, age } = req.body;
-    db.query('INSERT INTO users  SET ?', { name, age }, (err, results) => {
+    const { name, age, email, password } = req.body;
+    db.query('INSERT INTO users  SET ?', { name, age, email, password }, (err, results) => {
         if (err) {
             return res.status(500).json(err);
         }
@@ -36,9 +36,9 @@ router.get('/:id', (req, res) => {
 
 // Update User
 router.put('/:id', (req, res) => {
-    const { name, age } = req.body;
+    const { name, age, email } = req.body;
     const userId = req.params.id;
-    db.query(`UPDATE users SET name = ?, age = ? WHERE id = ?`, [name, age, userId], (err, results) => {
+    db.query(`UPDATE users SET name = ?, age = ?,email= ?, WHERE id = ?`, [name, age, email, userId], (err, results) => {
         if (err) {
             return res.status(500).json(err);
         }
