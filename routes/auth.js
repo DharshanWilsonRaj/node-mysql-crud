@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const db = require('../config/db');
-
+const { generateToken } = require('../utils/jwtUtils');
 
 router.post('/register', async (req, res) => {
     const { name, email, age, password } = req.body;
@@ -57,7 +57,8 @@ router.post('/login', async (req, res) => {
             return res.status(401).json({ success: false, message: 'Invalid email or password' });
         }
 
-        return res.status(200).json({ success: true, message: 'Login successful' });
+        const token = generateToken({ email, password });
+        return res.status(200).json({ success: true, message: 'Login successful', token });
     }
     catch (error) {
         console.error("Error hashing password:", error);
