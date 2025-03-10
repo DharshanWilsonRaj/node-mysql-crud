@@ -37,6 +37,9 @@ const validateToken = (req, res, next) => {
 
 app.use('/auth', authRoutes);
 
+
+// ?
+
 const routesWithMiddleware = [
     { path: '/users', route: userRoutes },
     { path: '/movies', route: movieRoutes },
