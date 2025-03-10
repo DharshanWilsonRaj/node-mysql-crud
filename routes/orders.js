@@ -87,8 +87,4 @@ router.get('/users', (req, res) => {  // get all users and  their orders
     })
 });
 
-
-
-
-
 module.exports = router;
