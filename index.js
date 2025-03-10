@@ -27,7 +27,7 @@ const validateToken = (req, res, next) => {
                 next();
             }
         });
-    } else {
+    } else { 
         res.status(401).json({
             success: false,
             message: 'Unauthenticated user request',

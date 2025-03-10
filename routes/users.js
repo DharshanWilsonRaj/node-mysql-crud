@@ -38,6 +38,7 @@ router.get('/:id', (req, res) => {
 router.put('/:id', (req, res) => {
     const { name, age, email } = req.body;
     const userId = req.params.id;
+    
     db.query(`UPDATE users SET name = ?, age = ?,email= ?, WHERE id = ?`, [name, age, email, userId], (err, results) => {
         if (err) {
             return res.status(500).json(err);
@@ -65,5 +66,3 @@ router.delete('/:id', (req, res) => {
 });
 
 module.exports = router
-
-
